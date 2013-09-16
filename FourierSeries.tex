@@ -1,0 +1,513 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\title{Expanded Notes on the Fourier Series from Walter Rudin's Principles of Analysis }
+\author{Anvesh Tanuku}
+\date{\today}
+
+\begin{document}
+
+
+\maketitle
+\section{The Trignometric Functions}
+In order to develop the formalism of the Fourier series, we must first the familiar trigonometric functions.  We begin our study of the trigonometric functions by developing the some important properties of the exponential function.
+\subsection{The Exponential Function}
+We define the exponential function:  
+\begin{equation}
+\label{eq:exp}
+E(z)=\sum_{n=0}^\infty \frac{z^n}{n!}
+\end{equation}
+
+We would like to understand how two exponential functions behave when multiplied together. 
+Note for fixed $z$:
+$$\left|\frac{z^{n+1}}{(n+1)!}/\frac{z^{n}}{(n)!}\right| = \left|\frac{z}{n+1}\right|$$  By the ratio test,  as $n\rightarrow\infty$, $\left|\frac{z}{n+1}\right|\rightarrow 0$.  Since the sequence converges, the limit superior is  equal to the limit of the sequence.  Thus the series given by Eq. \ref{eq:exp} converges for all complex $z$.  Furthermore, since $\Sigma \frac{z^n}{n!}$ converges for all values of $z$, if $\Sigma \frac{z^n}{n!}$  converges, $\Sigma |\frac{z^n}{n!}|$ converges.  Thus the series is absolutely convergent.   This allows us to utilize theorem 3.5 and the binomial theorem to show the following useful result about the product of $E(z)$ and $E(w)$:
+\begin{align} 
+E(z)E(w)  &=\left(\sum_{k=0}^\infty \frac{z^n}{n!} \right) \left(\sum_{k=0}^\infty\frac{w^n}{n!} \right) \\&=\sum_{n=0}^\infty \sum_{k=0}^n \frac{z^n}{n!}\frac{w^{n-k}}{(n-k)!}\\
+&=\sum_{n=0}^\infty \frac{1}{n!}\sum_{k=0}^n z^nw^{n-k}\frac{n!}{n!(n-k)!}\\
+&=\sum_{n=0}^\infty \frac{1}{n!}\sum_{k=0}^n {n\choose k }z^nw^{n-k}\\
+& =\sum_{n=0}^\infty \frac{(z+w)^n}{n!}= E(z+w)
+\end{align}
+Thus for $z $and $w$ complex, we have 
+\begin{equation}
+\label{eq:add}
+E(z)E(w)= E(z+w)
+\end{equation}
+
+Furthermore, by applying $z$ and $-z$ to  Eq.\ref{eq:add} ($z$ complex), we obtain, 
+$$E(z)E(-z)=E(z-z)=E(0)=\sum_0^\infty \frac{0^n}{n!} = 1$$
+
+ $E(0)=1$.  \\
+
+
+\noindent \textbf{Theorem 1.}  \emph{$E(z) \neq 0$ for all $z\in \mathbb{C}$.  $E(x)>0$ for all $x\in \mathbb{R}$}\\
+
+\noindent \textbf{Proof.}  To see this, suppose that there exists some $z$ for which $ E(z)=0$.  Then $E(z)E(-z)=1$, but this means $(0)(E(z))=1$ -a contradiction.
+Note that if $x>0$, Eq. \ref{eq:exp}  implies that $E(x)>0$ (since each term in the series is greater than 0).  Therefore, since $ E(-x)E(x)=1$, $E(-x)>0$ $\blacksquare$.
+
+As $x\rightarrow \infty$, Eq. \ref{eq:exp} approaches $\infty$.  Since $E(-x)=\frac{1}{E(x)}$ (by Eq. \ref{eq:add}), we can conclude that $E(x) \rightarrow 0$ as $x\rightarrow -\infty$.  Furthermore, suppose $x>y$.  Then for each $n$, $\frac{x^n}{n!}>\frac{y}{n!}$.  Therefore $E(x)>E(y)$.  Therefore,$ E(x)$ is strictly increasing on $\mathbb{R}$.  
+
+It will be useful for our purposes to understand the differentiability of $E(x)$ (x is real).  We see that $E(x)$ is the sum of uniformly convergent continuously differentiable functions (and the derivatives of the sequence  derivatives are also uniformly convergent).  Therefore $E(x)$ must also be differentiable.  We come to the following theorem:
+
+\newpage
+\noindent  \textbf{Theorem 2.} \emph{$E(x)$ is differentiable and has derivative:}
+
+\begin{equation}
+\label{eq:DE}
+E'(x)=E(x) 
+\end{equation}
+
+
+
+\noindent \textbf{Proof.} We consider the difference quotient: 
+\begin{equation}
+\label{eq:DE}
+\phi(h) = \frac{E(x+h)-E(x)}{h}
+\end{equation}
+By the addition rule:
+\begin{align}
+\label{eq:DE}
+ \frac{E(x+h)-E(x)}{h} &= \frac{E(x)E(h)-E(x)}{h}\\
+\label{eq:hi}
+&= E(x)\frac{(E(h)-1)}{h}
+\end{align}
+
+Using Eq. \ref{eq:exp}, we rewrite \ref{eq:hi} as 
+\begin{align}
+\left(\sum_{n=0}^\infty\frac{x^n}{n!}\right)\frac{(\sum_{n=0}^\infty \frac{h^n}{n!}-1)}{h}&=\left(\sum_{n=0}^\infty\frac{x^n}{n!}\right)\left(\sum_{n=0}^\infty \frac{h^{n-1}}{n!}-\frac{1}{h}\right)\\
+&= \left(\sum_{n=0}^\infty\frac{x^n}{n!}\right)\left(\sum_{n=1}^\infty \frac{h^{n}}{(n+1)!}+\frac{1}{h}-\frac{1}{h}\right)\\
+&=\left(\sum_{n=0}^\infty\frac{x^n}{n!}\right)\left(1+\frac{h}{2!}+\frac{h^2}{3!}+...\right)
+\end{align}
+The limit as $h\rightarrow 0$  of  $\left(1+\frac{h}{2!}+\frac{h^2}{3!}+...\right)$ is 1.  Therefore,
+$$\lim_{h\rightarrow 0} \phi(h)= \lim_{h\rightarrow 0}  \left(\sum_{n=0}^\infty\frac{x^n}{n!}\right)\left(1+\frac{h}{2!}+\frac{h^2}{3!}+...\right)= E(x)=E'(x)\hbox{  } \blacksquare$$  
+
+Finally note that E(1)=e (Rudin Definition 3.30).  Furthermore, inductively it follows from the addition formula that 
+$$E(z_1+z_2+z+3...+z_n)=E(z_1)E(z_2)...E(z_n)$$ .  Therefore, taking $z_1=z_2=...=z_n=1$, we find that $E(n)=e^n$.    Let $p=\frac{m}{n}$ where $m$ and $n$ are positive integers.  Then,
+$$[E(p)]^m =E(mp)=E(n)=e^n=e^{mp}=(e^{p})^m$$
+
+
+Define $$e^x=sup \{e^p \hbox{($p<x$, $p$ rational)}\}$$
+
+
+Fix x.  Take an increasing sequence of rationals $(p_n)<x$ such that $p_n \rightarrow x$.  
+\newpage 
+Then,
+\begin{align}
+\lim_{p_n\rightarrow x} \sum_{m=0}^{\infty} \frac{(p_n)^m}{m!} &=\sum_{m=0}^\infty \frac{x^n}{n!} \hbox{x (by uniform continuity)}\\
+&=\sup \{E(p_n) \}\hbox{( by monotonicity)}\\
+&=\sup\{ e^{p_n}\}\\
+&=e^x   \hbox{  } \blacksquare
+\end{align}
+
+We have established that $E(x)$ coinsides with the function $e^x$.  It follows easily from the definition of$ E(x)$ that the familiar properties we associate with the exponential function hold for $e^x$.  We are now equipped with the tools necessary to define properties of the sine and cosine functions.
+\subsection{Sine and Cosine}
+
+Define:
+\begin{align}
+\label{eq:cos}
+C(x)&=\frac{1}{2}[E(ix)+E(-ix)]\\
+\label{eq:sin}
+S(x)&=\frac{1}{2i}[E(ix)-E(ix)]
+\end{align}
+
+Note that 
+\begin{equation}
+E(ix)=C(x)+iS(x)
+\end{equation}
+We see that $C(x)$ and $S(x)$ have all the familiar properties of the sine and cosine functions.  (to be continued...)
+
+
+\section{The Fourier Series}
+\textbf{Definition}  A \emph{trignometric polynomial} is a finite sum of the form 
+\begin{equation}
+\label{eq:fs}
+f(x)=a_0 +\sum_{n=1}^N(a_n\cos(nx)+b_n \sin(nx)) \hbox{   x real}.
+\end{equation}
+where $a_0,....a_N$, $b_1,...,b_N$ are complex numbers.  From Eq. \ref{eq:cos} and Eq. \ref{eq:sin}, \ref{eq:fs} can be written as,
+
+\begin{equation}
+\label{eq:fs2}
+f(x)=\sum^N_{-N}c_ne^{inx}
+\end{equation}
+
+If $n$ is a nonzero integer, $e^{inx} $ is the derivative of $\frac{e^{inx}}{in}$.  By the fundamental theorem of calculus, we have:
+
+\begin{equation}
+\label{eq:int}
+\frac{1}{2\pi}\int^\pi_{-\pi} e^{inx}dx = \begin{cases} 1 & \text{if } n=0\\
+        						   0 & \text{if} n=\pm 1 \pm 2 ...
+\end{cases}
+\end{equation}
+
+Multiplying Eq. \ref{eq:fs2} by $e^{-imx}$ for an integer $m$ gives, 
+
+\begin{equation}
+\label{eq:mult56}
+e^{imx}f(x)=\sum^N_{-N}c_ne^{inx}e^{-imx}
+\end{equation}
+
+Uniform convergence allows us to integrate both sides of \ref{eq:mult56} on $[-\pi, \pi]$.  For the right hand side, if $m\neq n$, 
+\begin{equation}
+\label{eq:zero}
+\frac{1}{2\pi}\int^\pi_{-\pi} e^{inx}e^{-imx}dx =0
+\end{equation}
+by Eq. \ref{eq:int}.  However, if $m=n$, Eq. \ref{eq:int} suggests that 
+
+\begin{equation}
+\int^\pi_{-\pi} e^{inx}e^{-imx}dx =2\pi
+\end{equation}
+
+Therefore Eq. \ref{eq:mult56} becomes:
+\begin{equation}
+\label{eq:coeff}
+\int_{-2\pi}^{2\pi}e^{imx}f(x)=2\pi (c_m)
+\end{equation}
+
+We extend the definition of Eq. \ref{eq:fs2} and define a \emph{trignometric series} to be a series of the form
+
+\begin{equation}
+\sum_{\-\infty}^\infty c_n e^{inx}
+\end{equation}
+
+If $f$ is an integrable function on $[-\pi,\pi]$, the numbers $c_m$ defined by \ref{eq:coeff}  the numbers $c_m$, for all integers $m$,  are called the \emph{fourier coefficients}.
+
+\textbf{Definition} Let $(\phi_n)$ $(n=1,2,3...)$ be a sequence of complex functions on $[a,b]$, such that 
+\begin{equation}
+\label{eq:orth}
+\int_a^b\phi_n(x)\overline{\phi_m(x)} dx =0 \text{            ($n\neq m$)}
+\end{equation}
+Then ($\phi_n$) is said to be an \emph{orthoonal system of functions} on $[a,b]$.  If, in addition 
+\begin{equation}
+\int_a^b |\phi_n(x)|^2 dx=1
+\end{equation}
+for all n, $(\phi_n)$ is said to be \emph{orthonormal}.  
+
+\noindent \textbf{Example 1.}  $(2\pi)^{-{1/2}}e^{inx}$ from an orthogonal system on $[-pi,pi]$.  This follows from Eq. \ref{eq:int} and \ref{eq:zero}\\
+\textbf{Example 2.} The real functions 
+\begin{equation}
+\frac{1}{\sqrt{2\pi}},\frac{\cos(x)}{\sqrt{\pi}},\frac{\sin(x)}{\sqrt{\pi}},\frac{\cos(2x)}{\sqrt{\pi}},\frac{\sin(2x)}{\sqrt{\pi}},...
+\end{equation}
+\textbf{case 1} $\frac{\cos mx}{\sqrt{\pi}}$ and $\frac{\sin nx}{\sqrt{\pi}}$ ($n\neq m$)
+\begin{equation}
+\int_{-\pi}^\pi \frac{\cos mx}{\sqrt{\pi}}\frac{\sin nx}{\sqrt{\pi}}dx = 0
+\end{equation}
+\textbf{case 2} $\frac{\sin mx}{\sqrt{\pi}}$ and $\frac{\sin nx}{\sqrt{\pi}}$ ($n\neq m$)
+\begin{equation}
+\int_{-\pi}^\pi \frac{\sin mx}{\sqrt{\pi}}\frac{\sin nx}{\sqrt{\pi}}dx = 0
+\end{equation}
+\textbf{case 3} $\frac{\cos mx}{\sqrt{\pi}}$ and $\frac{\cos nx}{\sqrt{\pi}}$ ($n\neq m$)
+\begin{equation}
+\int_{-\pi}^\pi \frac{\cos mx}{\sqrt{\pi}}\frac{\cos nx}{\sqrt{\pi}}dx = 0
+\end{equation}
+\textbf{case 4} $\frac{1}{\sqrt{2\pi}}$ and $\frac{\cos nx}{\sqrt{\pi}}$ 
+\begin{equation}
+\int_{-\pi}^\pi \frac{1}{\sqrt{2\pi}}\frac{\cos nx}{\sqrt{\pi}}dx = 0
+\end{equation}
+\textbf{case 5} $\frac{1}{\sqrt{2\pi}}$ and $\frac{\sin nx}{\sqrt{\pi}}$ 
+\begin{equation}
+\int_{-\pi}^\pi \frac{1}{\sqrt{2\pi}}\frac{\sin nx}{\sqrt{\pi}}dx = 0
+\end{equation}
+Therefore, \ref{eq:orth} holds in all cases.
+
+If $\phi_n$ is orthonormal on $[a,b] $ and if\begin{equation}
+c_n=\int_a^bf(t)\overline{\phi_n(t)}dt \text{ ($n=1,2,3,...$)},
+\end{equation}
+ we call $c_n$ the $n^{th} $ Fourier coefficient of $f$ relative to $\phi_n$.  We write 
+\begin{equation}
+f(x)\sim \sum_{1}^{\infty}c_n\phi_n(x)
+\end{equation}
+and call this the Fourier series of $f$ (relative to $(\phi_n)$.  For the rest of these notes, we assume $f$ is integrable.
+\newpage
+\textbf{Theorem} \emph{ Let $\phi_n$ be orthonormal on $[a,b]$ Let}
+
+
+\begin{equation}
+s_n=\sum_{m=1}^{n} c_m\phi_m(x) 
+\end{equation}
+\emph{
+be the $n^th$ partial sum of the Fourier series of $f$, and suppose,}
+\begin{equation}
+t_n(x) = \sum^n_{m=1} \gamma_m \phi_m(x)
+\end{equation}
+\begin{equation}
+\int_a^b |f-s_n|dx \leq \int_a^b |f-t_n|^2 dx
+\end{equation}
+\emph{and equality holds if and only if}
+\begin{equation}
+\gamma_m=c_m\text(m=1,...n)
+\end{equation}
+
+
+\textbf{Proof.}
+We begin by evaluating the following integral:
+\begin{align}
+\int_a^b f \overline{t_n}dx&= \int_a^b f \sum_{m=1}^n\overline{\gamma_m}\overline{\phi_m(x)} dx \text{ (Theorem 1.3)}
+\end{align}
+Since the sum is finite, we can integrate it term by term.  Then,
+\begin{align}
+\int_a^b f \sum_{m=1}^n\overline{\gamma_m}\overline{\phi_m(x)} dx &=\int_a^b \overline{\gamma_1}(f\overline{\phi_1(x)})+... \overline{\gamma_n}(f\overline{\phi_n(x)}) dx\\
+&=\overline{\gamma_1}\int_a^b (f\overline{\phi_1(x)})dx+... \overline{\gamma_n}\int_a^b(f\overline{\phi_n(x)}) dx\\
+&=  \overline{\gamma_1}c_1+...  \overline{\gamma_n}c_n\\
+&=\sum_{m=1}^n \overline{\gamma_m }c_m
+\end{align}
+We also have that 
+\begin{align}
+\int_a^b|t_n|^2 dx &= \int_a^b t_n\overline{t_n} dx \\
+\label{eq:fifty}
+                    &= \int  \sum_{m=1}^n \overline{\gamma_m}\overline{\phi_m} \sum_{k=1}^n\gamma_k\phi_k dx\\ 
+                \label{eq:fiftyone}    
+                    &=\sum_{m=1}^n |\gamma_m|^2 
+\end{align}
+
+In the integrand of Eq. \ref{eq:fifty}, we have a product of the form $$(\overline{\gamma_1}\overline{\phi_1}+...\overline{\gamma_n}\overline{\phi_n})(\gamma_1\phi_1+...+\gamma_n\phi_n)$$  Each term in the product is of the form: $$\overline{\gamma_n}\overline{\phi_n}\gamma_m\phi_m$$  Once again since the sum is finite and we can integrate these terms one at a time.  For, $n\neq m$ we have by Eq. \ref{eq:orth} that the integral of these terms evaluate to 0.  when $m=n$ the integral these terms evaluate to $|\gamma_n|^2$. Thus we are left with  Eq. \ref{eq:fiftyone}.
+
+Also we note that 
+
+\begin{equation}
+\overline{c_m}=\overline{\int_a^bf\overline{\phi_m}dx}  = \int_a^b\overline{f\overline{\phi_m}}dx=\int_a^b\overline{f}\phi_m dx
+\end{equation}
+
+Next we would like to evaluate the squared error of the function $t_n$ in approximating $f$.  We get:
+\begin{align}
+\int_a^b |f-t_n|^2 dx &= \int_a^b(f-t_n)\overline{(f-t_n )} dx\\
+                     &= \int_a^bf-t_n)(\overline{f}-\overline{t_n})dx\\
+                     &=\int_a^b|f|^2dx+\int_a^bf\overline{t_n}dx+\int_a^b\overline{f}t_n dx+\int_a^b|t_n|^2dx\\
+                     &=\int_a^b|f|^2dx -\sum_{m=1}^nc_m\overline{\gamma_m} - \sum_{m=1}^n \overline{c_m}\gamma_m + \sum_{m=1}^n \gamma_m\overline{\gamma_m}\\
+                     \nonumber
+              &=\int_a^b|f|^2dx - \sum_{m=1}^n |c_m|^2+ \sum_{m=1}^n|c_m|^2-\sum_{m=1}^nc_m\overline{\gamma_m}\\& \hbox{          }- \sum_{m=1}^n \overline{c_m}\gamma_m+ \sum_{m=1}^n \gamma_m\overline{\gamma_m}\\
+              \label{eq:minimize}
+              &=\int_a^b|f|^2dx - \sum_{m=1}^n |c_m|^2+ \sum_{m=1}^n|c_m-\gamma_m|^2 
+\end{align}
+
+Similarly, for $\int_a^b |f-s_n|^2 dx $, we obtain:
+\begin{align}
+\int_a^b |f-s_n|^2 dx &= \int_a^b(f-s_n)\overline{(f-s_n )} dx\\
+                     &= \int_a^b (f-s_n)(\overline{f}-\overline{s_n})dx\\
+                     &=\int_a^b|f|^2dx+\int_a^bf\overline{s_n}dx+\int_a^b\overline{f}s_n dx+\int_a^b|s_n|^2dx\\
+              &=\int_a^b|f|^2dx - \sum_{m=1}^n |c_m|^2+ \sum_{m=1}^n|c_m|^2 -\sum_{m=1}|c_m|^2\\
+&=\int_a^b|f|^2dx - \sum_{m=1}^n |c_m|^2
+\end{align}
+Therefore, $\int_a^b |f-s_n|^2 dx \leq \int_a^b |f-t_n|^2 dx$ unless $\gamma_m=c_m$ for all $m$-- in which case equality holds.$\blacksquare$.\\
+
+
+\textbf{Theorem} \emph{If $(\phi_n) $is orthonormal on $[a,b]$, and if }
+	\begin{equation}
+	f(x) \sim \sum_{n=1}^\infty c_n\phi_n(x),
+\end{equation}
+then
+\begin{equation}
+\label{eq:Bessel}
+\sum_{n=1}^\infty |c_n|^2 \leq \int_a^b |f(x)|^2 dx
+\end{equation}
+In particular,
+\begin{equation}
+\lim_{n\rightarrow \infty} c_n=0
+\end{equation}
+
+\textbf{Proof.} Note that $\int_a^b |f-s_n| dx \geq 0$.  Therefore,
+\begin{equation}
+\int_a^b|f|^2dx - \sum_{m=1}^n |c_m|^2 \geq 0
+\end{equation}
+By our calculation in the previous theorem.  Therefore,
+\begin{equation}
+\int_a^b|f|^2dx \geq \sum_{m=1}^n |c_m|^2 
+\end{equation}
+
+The sequence of partial sums is bounded therefore the series converges. Since the series converges, $\lim_{n\rightarrow \infty} |c_n|^2=0 $, so $c_n\rightarrow 0$ as $n\rightarrow \infty$.  Letting $n\rightarrow \infty$  we obtain Eq.\ref{eq:Bessel}. This is called \textbf{Bessel's Inequality}.  $\blacksquare$
+
+\subsection{Trignometric series}
+From now on, we will confine our attention to trignometric series.  We shall also consider functions that have period $2\pi$ and are Darboux integrable on $[-\pi,\pi]$.  We take up the following notation:
+\begin{equation}
+s_N(x) = s_N(f;x)=\sum_{-N}^N c_n e^{inx}
+\end{equation}
+to be defined as the $N^{th}$ partial sum of the Fourier series of $f$.  By Eq. \ref{eq:int}, we get 
+\begin{align}
+\frac{1}{2\pi} \int_{-\pi}^{\pi} |s_N(x)|^2 dx &= \frac{1}{2\pi} \int_{-\pi}^\pi \left|\sum_{-N}^N c_ne^{inx}\right|^2 dx\\
+							&= \frac{1}{2\pi} \int_{-\pi}^\pi \left|\sum_{-N}^N c_ne^{inx}\right|^2 dx\\
+							&=\sum_{-N}^N |c_n|^2\leq \frac{1}{2\pi}\int_{-\pi}^\pi |f(x)|^2 dx
+\end{align}
+The last inequality follows from Bessel's inequality.
+
+
+We now define the \emph{Dirchlet kernel}:
+
+\begin{equation}
+\label{eq:DK}
+D_N(x) = \sum_{-N}^N e^{inx}
+\end{equation}
+
+By multiplying both sides of  Eq. \ref{eq:DK} by $(e^{ix}-1)$ we obtain a more manegable expression for $D_N$.
+\begin{equation}
+\label{eq:DN}
+(e^{ix}-1)D_N(x) = (e^{ix}-1)\sum_{-N}^N e^{inx}
+\end{equation}
+The left hand side is a telescoping sum:
+
+\begin{align}
+\nonumber
+(e^{ix}-1)D_N(x) &=\\
+\nonumber
+ &=e^{-iNx}(e^{ix}-1)+e^{-i(N-1)x}(e^{ix}-1)+\\
+&...+e^{i(N-1)x}(e^{ix}-1)+e^{iNx}(e^{ix}-1)\\
+\nonumber
+ &=(e^{i(N-1)x}-e^{-iNx})+(e^{i(N-2)x}-e^{-i(N-1)x})+\\
+&...+(e^{iNx}-e^{i(N-1)x})+(e^{i(N+1)x}-e^{iNx})\\
+\label{eq:D}
+&= e^{i(N+1)x}- e^{-iNx}
+\end{align}
+
+Multiply both sides of Eq. \ref{eq:DN} by $e^{-ix\slash2}$,
+\begin{equation}
+D_N(x)= \frac{e^{i(N+1)x-ix\slash2}- e^{-iNx-ix\slash2}}{e^{ix-ix\slash2}-e ^{-ix\slash2}}=\frac{\sin (x(N+1\slash 2))}{\sin(x\slash 2)}
+\end{equation}
+
+\begin{align}
+s_N(f;x)&=\sum_{-N}^N\left(\frac{1}{2\pi}\int_{-\pi}^\pi f(t)e^{-int}dt\right)e^{inx} \\
+&=\frac{1}{2\pi}\int_{-\pi}^\pi\sum_{-N}^N f(t)e^{in(x-t)}dt\\
+\label{eq:FT}
+&=\frac{1}{2\pi}\int_{-\pi}^\pi\sum_{-N}^N f(t)D_N(x-t)dt=\frac{1}{2\pi}\int_{-\pi}^\pi\sum_{-N}^N f(x-t)D_N(t)dt
+\end{align}
+
+\textbf{Theorem} \emph{If, for some x, there are cosntants $\delta>0$ and $ M<\infty$ such that }
+\begin{equation} 
+\label{eq:bound}
+|f(x+t)-f(x)|\leq M|t|
+\end{equation}
+\emph{for all $t \in (-\delta, \delta)$, then }
+\begin{equation}
+\lim_{N\rightarrow \infty} s_N(f;x) =f(x)
+\end{equation}
+
+\textbf{Proof} Define:
+\begin{equation}
+g(t):=\frac{f(x+t)-f(t)}{\sin(t\slash2)}
+\end{equation}
+for $0<|t|<\pi$.  Note $ g(0)=0$ and by definition of the Dirchlet kernel,
+\begin{equation}
+\frac{1}{2\pi}\int_{-\pi}^\pi D_N(x) =1
+\end{equation}
+
+Then,
+\begin{align}
+s_N(f;x) -f(x)&=\frac{1}{2\pi}\int_{-\pi}^{\pi}f(x-t)D_N(t)dt-\frac{1}{2\pi}\int_{-\pi}^{\pi}f(x)D_N(t)dt\\
+&=\frac{1}{2\pi}\int_{-\pi}^{\pi}f(x-t)D_N(t)-f(x)D_N(t)dt\\
+&=\frac{1}{2\pi}\int_{-\pi}^{\pi}(f(x-t)-f(x))D_N(t)dt\\
+&=\frac{1}{2\pi}\int_{-\pi}^{\pi}(f(x-t)-f(x))\frac{\sin(N+1\slash2)}{\sin(x\slash2)}dt\\
+&=\frac{1}{2\pi}\int_{-\pi}^{\pi}g(t)\frac{\sin(N+1\slash2)t}{\sin(t\slash 2)}dt\\
+\end{align}
+
+We now make use of the following trig identity:
+\begin{equation}
+\sin(\alpha+\beta)=\sin(\alpha)\cos(\beta)+\sin(\beta)\cos(\alpha)
+\end{equation}
+
+to obtain:
+\begin{align}
+\nonumber
+s_{N}(f;x) -f(x) =& \frac{1}{2\pi} \int_{-\pi}^{\pi}\left[g(t)\cos(\frac{t}{2})\right]\sin(Nt)dt
+\label{eq:ineq}
+\\&+\frac{1}{2\pi}\int_{-\pi}^{\pi}\left[g(t)\sin(\frac{t}{2})\right]\cos(Nt)dt
+\end{align}
+
+Also we have:
+\begin{equation}
+s_{N}(f;x) -f(x) \leq |s_{N}(f;x) -f(x)|
+\end{equation}
+So,
+\begin{align}
+s_{N}(f;x) -f(x)\leq &\left|\frac{1}{2\pi} \int_{-\pi}^{\pi}\left[g(t)\cos(\frac{t}{2})\right]\sin(Nt)dt+\frac{1}{2\pi}\int_{-\pi}^{\pi}\left[g(t)\sin(\frac{t}{2})\right]\cos(Nt)dt\right|
+\end{align}
+and by the triangle inequality,
+\begin{align}
+s_{N}(f;x) -f(x) \leq&\left|\frac{1}{2\pi} \int_{-\pi}^{\pi}\left[g(t)\cos(\frac{t}{2})\right]\sin(Nt)dt\right|\\
+&+ \left|\frac{1}{2\pi}\int_{-\pi}^{\pi}\left[g(t)\sin(\frac{t}{2})\right]\cos(Nt)dt\right|
+\end{align}
+and by Theorem 6.13 in Rudin,
+\begin{align}
+s_{N}(f;x) -f(x) \leq&\frac{1}{2\pi} \int_{-\pi}^{\pi}\left|\left[g(t)\cos(\frac{t}{2})\right]\sin(Nt)\right|dt\\
+&+ \frac{1}{2\pi}\int_{-\pi}^{\pi}\left|\left[g(t)\sin(\frac{t}{2})\right]\cos(Nt)\right|dt
+\end{align}
+By \ref{eq:bound}, $\left|\left[g(t)\cos(\frac{t}{2})\right]\right| \leq |t|M$ and $\left|\left[g(t)\sin(\frac{t}{2})\right]\right| \leq |t|M$  
+ and 
+\begin{align}
+s_{N}(f;x) -f(x) \leq \frac{1}{2\pi} \int_{-\pi}^{\pi} M|t|\left|\sin(Nt)\right| dt  +\frac{1}{2\pi} \int_{-\pi}^{\pi} M|t|\left|\cos(Nt)\right| dt  
+\end{align}
+The two integrals in the right evaluate to:
+
+\begin{align}
+ \frac{1}{2\pi} \int M|t|\left|\sin(Nt)\right| dt &=-\frac{\text{sgn}(t)\text{sgn}(\sin(Nt))(Nt\cos(Nt)-\sin(Nt))}{2\pi N^2}\\
+ \frac{1}{2\pi} \int M|t|\left|\cos(Nt)\right| dt  &=\frac{\text{sgn}(t)\text{sgn}(\cos(Nt))(Nt\sin(Nt)+\cos(Nt))}{2\pi N^2}
+\end{align}
+
+Where, $sgn(t)=t/|t|$, $(t\neq0)$.  It is easy to see that as $N\rightarrow \infty$ these two integrals tend to 0.  Thus $s_N(x)-f(x)$ tends to 0 as well as $N\rightarrow \infty$ $\blacksquare$.  
+
+\textbf{Corollary} \emph{If f(x)=0 for all $x$ in some segment $J$, then $\lim s_N(f;x)=0$ for every $x\in J.$. }
+
+We now state without proof the following theorem about uniform convergence of the fourier series:\\
+
+\textbf{Theorem} \emph{If $f$ is continuous (with period $2\pi$) and if $\epsilon >0$, then there is a trignometric polyomial $P$ such that }
+\begin{equation}
+|P(x)-f(x)|<\epsilon
+\end{equation}
+\emph{for all real $x$}
+
+The proof of this theorem requires a little bit of linear algebra which I unfortunately do not have time to develop at this time. However, the idea behind the proof is that the set of trignometic polynomials form a self adjoint algebra which is dense in the set of continuous functions on the unit circle. (to be continued...)
+ 
+\textbf{Parseval's Theorem} \emph{Suppose $f$ and $g$ are Darboux Integrable functions with period 2$\pi$, and}
+\begin{equation}
+f(x)\sim \sum_{-\infty}^{\infty} c_ne^{inx}
+\end{equation}
+\emph{and}
+\begin{equation}
+g(x)\sim \sum_{-\infty}^{\infty} \gamma_ne^{inx}
+\end{equation}
+\emph{Then,}
+\begin{align}
+\label{one}
+\lim_{N\rightarrow \infty} \frac{1}{2\pi} \int_{-\pi}^{\pi}|f(x)-s_N(f;x)|^2dx &=0\\
+\label{two}
+\frac{1}{2\pi}\int_{-\pi}^{\pi}f(x)\overline{g(x)}dx&=\sum_{-\infty}^{\infty}c_n\overline{\gamma_n},\\
+\label{three}
+\frac{1}{2\pi}\int_{-\pi}^{\pi}|f(x)|^2dx &=\sum_{-\infty}^{\infty}|c_n|^2
+\end{align}
+
+\textbf{Proof.} Define:
+\begin{equation}
+||h||_2=\left\{\frac{1}{2\pi}\int_{-\pi}^{\pi}|h(x)|^2dx\right\}^{1/2}
+\end{equation}
+Fix $\epsilon>0$.  Since $f$ is Darboux integrable  and $f(\pi)=f(-\pi)$, we can  use exercise 12 of chapter 6 to find $2\pi$ periodic function with, 
+\begin{equation}
+||f-h||_2 <\epsilon
+\end{equation}
+
+By the last  theorem we stated (didn't prove), we can also find a trignometric polynomial with $|h(x)-P(x)|<\epsilon$ for all $x$. From a previous theorem, if $P_0$ has degree $N_0$,
+$||h-s_N(h)||_2 \leq ||h-P||_2<\epsilon$ for all $N\geq N_0$.   Also recall, $|s_N(x)|^2\leq|f(x)|^2$.  Therefore,
+\begin{equation}
+||s_N(h)-s_N(f)||_2=||s_N(h-f)||_2 \leq ||h-f||_2 <\epsilon
+\end{equation}
+Therefore by the triangle inequality,
+\begin{equation}
+||s_N(f)-f||_2\leq||f-h||_2+||h-s_N(h)||_2+||s_N(h)-s_N(f)||_2=3\epsilon
+\end{equation}
+for $(N\geq N_0)$.
+
+which proves Eq.  \ref{one}.
+
+For \ref{two}:
+\begin{equation}
+\frac{1}{2\pi}\int_{-\pi}^{\pi}s_N(f)\overline{g}dx = \sum_{-N}^Nc_n\frac{1}{2\pi}\int_{-\pi}^\pi e^{inx}\overline{g(x)}dx = \sum_{-N}^{N} c_n \overline{\gamma_n}
+\end{equation}
+
+Holder's inequality gives us,
+
+\begin{equation}
+\left|\int f\overline{g} -\int s_N(f)\overline{g}\right| \leq \int \left|f-\int s_N(f)\right|\left|g\right| \leq\left\{\int|f-s_N|^2\int|g|^2\right\}^{1\slash2}
+\end{equation}
+By the pointwise convergence theorem the left hand side of the inequality tends to 0 as $N\rightarrow \infty$. which gives \ref{two}.  Allowing $f=g$ we get \ref{three}$\blacksquare$.
+
+
+
+
+
+\end{document}
